@@ -1,0 +1,332 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/inter/700.css';
+
+@custom-variant dark (&:is(.dark *));
+
+/* ========================================
+   Zi-Alpha: Cyber-Academia Design System
+   ======================================== */
+
+:root {
+  /* Cyber-Academia Color Palette (Dark Mode First) */
+  --slate-950: #020617;
+  --slate-900: #0F172A;
+  --slate-800: #1E293B;
+  --slate-400: #94A3B8;
+  --slate-50: #F8FAFC;
+  --indigo-500: #6366F1;
+  --indigo-600: #4F46E5;
+  --emerald-500: #10B981;
+  --amber-500: #F59E0B;
+
+  /* Semantic tokens */
+  --background: 222.2 84% 1.5%;
+  --foreground: 210 40% 98%;
+  --card: 222.2 47.4% 11.2%;
+  --card-foreground: 210 40% 98%;
+  --popover: 222.2 47.4% 11.2%;
+  --popover-foreground: 210 40% 98%;
+  --primary: 238.7 83.5% 66.7%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 217.2 32.6% 17.5%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 217.2 32.6% 17.5%;
+  --muted-foreground: 215.4 16.3% 61.6%;
+  --accent: 217.2 32.6% 17.5%;
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 217.2 32.6% 17.5%;
+  --input: 217.2 32.6% 17.5%;
+  --ring: 238.7 83.5% 66.7%;
+
+  /* Brand tokens */
+  --success: 160.1 84.1% 39.4%;
+  --warning: 37.7 92.1% 50.2%;
+
+  --chart-1: 238.7 83.5% 66.7%;
+  --chart-2: 160.1 84.1% 39.4%;
+  --chart-3: 37.7 92.1% 50.2%;
+  --chart-4: 217.2 32.6% 17.5%;
+  --chart-5: 215.4 16.3% 61.6%;
+
+  --radius: 0.625rem;
+
+  --sidebar: 222.2 47.4% 11.2%;
+  --sidebar-foreground: 210 40% 98%;
+  --sidebar-primary: 238.7 83.5% 66.7%;
+  --sidebar-primary-foreground: 210 40% 98%;
+  --sidebar-accent: 217.2 32.6% 17.5%;
+  --sidebar-accent-foreground: 210 40% 98%;
+  --sidebar-border: 217.2 32.6% 17.5%;
+  --sidebar-ring: 238.7 83.5% 66.7%;
+}
+
+/* No light mode - Cyber-Academia is dark mode only */
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Direct hex color tokens for Cyber-Academia */
+  --color-slate-950: #020617;
+  --color-slate-900: #0F172A;
+  --color-slate-800: #1E293B;
+  --color-slate-400: #94A3B8;
+  --color-slate-50: #F8FAFC;
+  --color-indigo-500: #6366F1;
+  --color-indigo-600: #4F46E5;
+  --color-emerald-500: #10B981;
+  --color-amber-500: #F59E0B;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-slate-950 text-slate-50 antialiased;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+  }
+
+  code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  }
+}
+
+/* ========================================
+   Glassmorphism Utility Classes
+   ======================================== */
+
+@layer components {
+  .glass {
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .glass-light {
+    background: rgba(15, 23, 42, 0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .glass-strong {
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  /* Video HUD gradient overlay */
+  .video-gradient-bottom {
+    background: linear-gradient(to top, rgba(2, 6, 23, 0.9) 0%, rgba(2, 6, 23, 0.5) 40%, transparent 100%);
+  }
+
+  .video-gradient-top {
+    background: linear-gradient(to bottom, rgba(2, 6, 23, 0.6) 0%, transparent 100%);
+  }
+
+  /* Compact info bar gradient (TikTok-like) */
+  .compact-info-bar {
+    background: linear-gradient(to top, rgba(2, 6, 23, 0.95) 0%, rgba(2, 6, 23, 0.7) 60%, transparent 100%);
+  }
+
+  /* Cyber-Academia Button Styles */
+  .btn-primary {
+    @apply bg-indigo-500 hover:bg-indigo-600 text-white font-medium transition-all duration-200;
+    @apply active:scale-95;
+  }
+
+  .btn-success {
+    @apply bg-emerald-500 hover:bg-emerald-600 text-white font-medium transition-all duration-200;
+    @apply active:scale-95;
+  }
+
+  .btn-ghost {
+    @apply bg-transparent hover:bg-slate-800/50 text-slate-50 transition-all duration-200;
+  }
+
+  /* Chat bubble styles */
+  .bubble-ai {
+    @apply bg-slate-900 text-slate-50;
+    border-radius: 0 1rem 1rem 1rem;
+  }
+
+  .bubble-user {
+    @apply bg-indigo-500 text-white;
+    border-radius: 1rem 0 1rem 1rem;
+  }
+
+  /* Scroll snap for video feed */
+  .video-feed {
+    @apply snap-y snap-mandatory overflow-y-scroll;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .video-feed::-webkit-scrollbar {
+    display: none;
+  }
+
+  .video-feed {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .video-item {
+    @apply snap-start snap-always;
+  }
+
+  /* XP Toast animation */
+  @keyframes xp-slide-down {
+    0% {
+      transform: translateY(-100%) translateX(-50%);
+      opacity: 0;
+    }
+
+    10% {
+      transform: translateY(0) translateX(-50%);
+      opacity: 1;
+    }
+
+    90% {
+      transform: translateY(0) translateX(-50%);
+      opacity: 1;
+    }
+
+    100% {
+      transform: translateY(-100%) translateX(-50%);
+      opacity: 0;
+    }
+  }
+
+  .xp-toast-animate {
+    animation: xp-slide-down 3s ease-in-out forwards;
+  }
+
+  /* Bottom sheet animation */
+  @keyframes slide-up {
+    from {
+      transform: translateY(100%);
+    }
+
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slide-down {
+    from {
+      transform: translateY(0);
+    }
+
+    to {
+      transform: translateY(100%);
+    }
+  }
+
+  .bottom-sheet-enter {
+    animation: slide-up 0.3s ease-out forwards;
+  }
+
+  .bottom-sheet-exit {
+    animation: slide-down 0.3s ease-in forwards;
+  }
+
+  /* Streak flame glow */
+  .flame-glow {
+    filter: drop-shadow(0 0 8px var(--amber-500));
+  }
+
+  /* Progress bar shimmer */
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  .xp-bar-shimmer {
+    background: linear-gradient(90deg,
+        var(--emerald-500) 0%,
+        #34d399 25%,
+        var(--emerald-500) 50%,
+        #34d399 75%,
+        var(--emerald-500) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite linear;
+  }
+
+  /* Icon hover pulse */
+  @keyframes pulse-scale {
+
+    0%,
+    100% {
+      transform: scale(1);
+    }
+
+    50% {
+      transform: scale(1.15);
+    }
+  }
+
+  .icon-pulse {
+    animation: pulse-scale 0.3s ease-in-out;
+  }
+
+  /* Label/Caption style */
+  .label-tech {
+    @apply text-xs uppercase tracking-wider font-medium text-slate-400;
+  }
+}
