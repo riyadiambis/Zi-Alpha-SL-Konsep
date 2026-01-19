@@ -3,10 +3,10 @@ import { motion } from 'framer-motion';
 import { HugeiconsIcon } from '@hugeicons/react';
 import {
     Home01Icon,
-    Download01Icon,
     User02Icon,
     AiBrain01Icon,
-    Comment02Icon
+    Search01Icon,
+    ChartLineData02Icon
 } from '@hugeicons/core-free-icons';
 
 interface NavItem {
@@ -17,9 +17,9 @@ interface NavItem {
 
 const navItems: NavItem[] = [
     { to: '/', icon: Home01Icon, label: 'Home' },
+    { to: '/explore', icon: Search01Icon, label: 'Explore' },
     { to: '/ziabot', icon: AiBrain01Icon, label: 'ZiAbot' },
-    { to: '/downloads', icon: Download01Icon, label: 'Downloads' },
-    { to: '/diskusi-soal', icon: Comment02Icon, label: 'Diskusi' },
+    { to: '/progress', icon: ChartLineData02Icon, label: 'Progress' },
     { to: '/profile', icon: User02Icon, label: 'Profile' },
 ];
 

@@ -11,11 +11,17 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ZiabotRouteImport } from './routes/ziabot'
 import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as ProgressRouteImport } from './routes/progress'
 import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as ExploreRouteImport } from './routes/explore'
 import { Route as DownloadsRouteImport } from './routes/downloads'
-import { Route as DiskusiSoalRouteImport } from './routes/diskusi-soal'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ZiabotPracticeRouteImport } from './routes/ziabot.practice'
+import { Route as ZiabotNotesRouteImport } from './routes/ziabot.notes'
+import { Route as ZiabotFlashcardsRouteImport } from './routes/ziabot.flashcards'
+import { Route as ExploreSubjectIdRouteImport } from './routes/explore.$subjectId'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
+import { Route as CreatorExplainRouteImport } from './routes/creator.explain'
 import { Route as AuthSignupRouteImport } from './routes/auth/signup'
 import { Route as AuthLoginRouteImport } from './routes/auth/login'
 
@@ -29,9 +35,19 @@ const SettingsRoute = SettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProgressRoute = ProgressRouteImport.update({
+  id: '/progress',
+  path: '/progress',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProfileRoute = ProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExploreRoute = ExploreRouteImport.update({
+  id: '/explore',
+  path: '/explore',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DownloadsRoute = DownloadsRouteImport.update({
@@ -39,19 +55,39 @@ const DownloadsRoute = DownloadsRouteImport.update({
   path: '/downloads',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DiskusiSoalRoute = DiskusiSoalRouteImport.update({
-  id: '/diskusi-soal',
-  path: '/diskusi-soal',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ZiabotPracticeRoute = ZiabotPracticeRouteImport.update({
+  id: '/practice',
+  path: '/practice',
+  getParentRoute: () => ZiabotRoute,
+} as any)
+const ZiabotNotesRoute = ZiabotNotesRouteImport.update({
+  id: '/notes',
+  path: '/notes',
+  getParentRoute: () => ZiabotRoute,
+} as any)
+const ZiabotFlashcardsRoute = ZiabotFlashcardsRouteImport.update({
+  id: '/flashcards',
+  path: '/flashcards',
+  getParentRoute: () => ZiabotRoute,
+} as any)
+const ExploreSubjectIdRoute = ExploreSubjectIdRouteImport.update({
+  id: '/$subjectId',
+  path: '/$subjectId',
+  getParentRoute: () => ExploreRoute,
+} as any)
 const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
   id: '/demo/tanstack-query',
   path: '/demo/tanstack-query',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CreatorExplainRoute = CreatorExplainRouteImport.update({
+  id: '/creator/explain',
+  path: '/creator/explain',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthSignupRoute = AuthSignupRouteImport.update({
@@ -67,83 +103,121 @@ const AuthLoginRoute = AuthLoginRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/diskusi-soal': typeof DiskusiSoalRoute
   '/downloads': typeof DownloadsRoute
+  '/explore': typeof ExploreRouteWithChildren
   '/profile': typeof ProfileRoute
+  '/progress': typeof ProgressRoute
   '/settings': typeof SettingsRoute
-  '/ziabot': typeof ZiabotRoute
+  '/ziabot': typeof ZiabotRouteWithChildren
   '/auth/login': typeof AuthLoginRoute
   '/auth/signup': typeof AuthSignupRoute
+  '/creator/explain': typeof CreatorExplainRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/explore/$subjectId': typeof ExploreSubjectIdRoute
+  '/ziabot/flashcards': typeof ZiabotFlashcardsRoute
+  '/ziabot/notes': typeof ZiabotNotesRoute
+  '/ziabot/practice': typeof ZiabotPracticeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/diskusi-soal': typeof DiskusiSoalRoute
   '/downloads': typeof DownloadsRoute
+  '/explore': typeof ExploreRouteWithChildren
   '/profile': typeof ProfileRoute
+  '/progress': typeof ProgressRoute
   '/settings': typeof SettingsRoute
-  '/ziabot': typeof ZiabotRoute
+  '/ziabot': typeof ZiabotRouteWithChildren
   '/auth/login': typeof AuthLoginRoute
   '/auth/signup': typeof AuthSignupRoute
+  '/creator/explain': typeof CreatorExplainRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/explore/$subjectId': typeof ExploreSubjectIdRoute
+  '/ziabot/flashcards': typeof ZiabotFlashcardsRoute
+  '/ziabot/notes': typeof ZiabotNotesRoute
+  '/ziabot/practice': typeof ZiabotPracticeRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/diskusi-soal': typeof DiskusiSoalRoute
   '/downloads': typeof DownloadsRoute
+  '/explore': typeof ExploreRouteWithChildren
   '/profile': typeof ProfileRoute
+  '/progress': typeof ProgressRoute
   '/settings': typeof SettingsRoute
-  '/ziabot': typeof ZiabotRoute
+  '/ziabot': typeof ZiabotRouteWithChildren
   '/auth/login': typeof AuthLoginRoute
   '/auth/signup': typeof AuthSignupRoute
+  '/creator/explain': typeof CreatorExplainRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/explore/$subjectId': typeof ExploreSubjectIdRoute
+  '/ziabot/flashcards': typeof ZiabotFlashcardsRoute
+  '/ziabot/notes': typeof ZiabotNotesRoute
+  '/ziabot/practice': typeof ZiabotPracticeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/diskusi-soal'
     | '/downloads'
+    | '/explore'
     | '/profile'
+    | '/progress'
     | '/settings'
     | '/ziabot'
     | '/auth/login'
     | '/auth/signup'
+    | '/creator/explain'
     | '/demo/tanstack-query'
+    | '/explore/$subjectId'
+    | '/ziabot/flashcards'
+    | '/ziabot/notes'
+    | '/ziabot/practice'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/diskusi-soal'
     | '/downloads'
+    | '/explore'
     | '/profile'
+    | '/progress'
     | '/settings'
     | '/ziabot'
     | '/auth/login'
     | '/auth/signup'
+    | '/creator/explain'
     | '/demo/tanstack-query'
+    | '/explore/$subjectId'
+    | '/ziabot/flashcards'
+    | '/ziabot/notes'
+    | '/ziabot/practice'
   id:
     | '__root__'
     | '/'
-    | '/diskusi-soal'
     | '/downloads'
+    | '/explore'
     | '/profile'
+    | '/progress'
     | '/settings'
     | '/ziabot'
     | '/auth/login'
     | '/auth/signup'
+    | '/creator/explain'
     | '/demo/tanstack-query'
+    | '/explore/$subjectId'
+    | '/ziabot/flashcards'
+    | '/ziabot/notes'
+    | '/ziabot/practice'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  DiskusiSoalRoute: typeof DiskusiSoalRoute
   DownloadsRoute: typeof DownloadsRoute
+  ExploreRoute: typeof ExploreRouteWithChildren
   ProfileRoute: typeof ProfileRoute
+  ProgressRoute: typeof ProgressRoute
   SettingsRoute: typeof SettingsRoute
-  ZiabotRoute: typeof ZiabotRoute
+  ZiabotRoute: typeof ZiabotRouteWithChildren
   AuthLoginRoute: typeof AuthLoginRoute
   AuthSignupRoute: typeof AuthSignupRoute
+  CreatorExplainRoute: typeof CreatorExplainRoute
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
 }
 
@@ -163,11 +237,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/progress': {
+      id: '/progress'
+      path: '/progress'
+      fullPath: '/progress'
+      preLoaderRoute: typeof ProgressRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/profile': {
       id: '/profile'
       path: '/profile'
       fullPath: '/profile'
       preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/explore': {
+      id: '/explore'
+      path: '/explore'
+      fullPath: '/explore'
+      preLoaderRoute: typeof ExploreRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/downloads': {
@@ -177,13 +265,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DownloadsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/diskusi-soal': {
-      id: '/diskusi-soal'
-      path: '/diskusi-soal'
-      fullPath: '/diskusi-soal'
-      preLoaderRoute: typeof DiskusiSoalRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -191,11 +272,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ziabot/practice': {
+      id: '/ziabot/practice'
+      path: '/practice'
+      fullPath: '/ziabot/practice'
+      preLoaderRoute: typeof ZiabotPracticeRouteImport
+      parentRoute: typeof ZiabotRoute
+    }
+    '/ziabot/notes': {
+      id: '/ziabot/notes'
+      path: '/notes'
+      fullPath: '/ziabot/notes'
+      preLoaderRoute: typeof ZiabotNotesRouteImport
+      parentRoute: typeof ZiabotRoute
+    }
+    '/ziabot/flashcards': {
+      id: '/ziabot/flashcards'
+      path: '/flashcards'
+      fullPath: '/ziabot/flashcards'
+      preLoaderRoute: typeof ZiabotFlashcardsRouteImport
+      parentRoute: typeof ZiabotRoute
+    }
+    '/explore/$subjectId': {
+      id: '/explore/$subjectId'
+      path: '/$subjectId'
+      fullPath: '/explore/$subjectId'
+      preLoaderRoute: typeof ExploreSubjectIdRouteImport
+      parentRoute: typeof ExploreRoute
+    }
     '/demo/tanstack-query': {
       id: '/demo/tanstack-query'
       path: '/demo/tanstack-query'
       fullPath: '/demo/tanstack-query'
       preLoaderRoute: typeof DemoTanstackQueryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/creator/explain': {
+      id: '/creator/explain'
+      path: '/creator/explain'
+      fullPath: '/creator/explain'
+      preLoaderRoute: typeof CreatorExplainRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth/signup': {
@@ -215,15 +331,43 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface ExploreRouteChildren {
+  ExploreSubjectIdRoute: typeof ExploreSubjectIdRoute
+}
+
+const ExploreRouteChildren: ExploreRouteChildren = {
+  ExploreSubjectIdRoute: ExploreSubjectIdRoute,
+}
+
+const ExploreRouteWithChildren =
+  ExploreRoute._addFileChildren(ExploreRouteChildren)
+
+interface ZiabotRouteChildren {
+  ZiabotFlashcardsRoute: typeof ZiabotFlashcardsRoute
+  ZiabotNotesRoute: typeof ZiabotNotesRoute
+  ZiabotPracticeRoute: typeof ZiabotPracticeRoute
+}
+
+const ZiabotRouteChildren: ZiabotRouteChildren = {
+  ZiabotFlashcardsRoute: ZiabotFlashcardsRoute,
+  ZiabotNotesRoute: ZiabotNotesRoute,
+  ZiabotPracticeRoute: ZiabotPracticeRoute,
+}
+
+const ZiabotRouteWithChildren =
+  ZiabotRoute._addFileChildren(ZiabotRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  DiskusiSoalRoute: DiskusiSoalRoute,
   DownloadsRoute: DownloadsRoute,
+  ExploreRoute: ExploreRouteWithChildren,
   ProfileRoute: ProfileRoute,
+  ProgressRoute: ProgressRoute,
   SettingsRoute: SettingsRoute,
-  ZiabotRoute: ZiabotRoute,
+  ZiabotRoute: ZiabotRouteWithChildren,
   AuthLoginRoute: AuthLoginRoute,
   AuthSignupRoute: AuthSignupRoute,
+  CreatorExplainRoute: CreatorExplainRoute,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
 }
 export const routeTree = rootRouteImport

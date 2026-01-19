@@ -2,17 +2,38 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { VideoPlayer } from './video-player';
 import { VideoHUD } from './video-hud';
+import { QAComments } from './qa-comments';
+import { CreatorProfile } from './creator-profile';
 import type { Video } from '../../lib/mock-data';
+import { mockVideos } from '../../lib/mock-data';
 
 interface VideoFeedProps {
     videos: Video[];
     onOpenMentor: (video: Video) => void;
+    onZiAbotAction?: (video: Video, action: 'notes' | 'practice' | 'flashcards') => void;
 }
 
-export function VideoFeed({ videos, onOpenMentor }: VideoFeedProps) {
+export function VideoFeed({ videos, onOpenMentor, onZiAbotAction }: VideoFeedProps) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [videoStates, setVideoStates] = useState<Record<string, { isLiked: boolean; currentTime: number }>>({});
+    const [showComments, setShowComments] = useState(false);
+    const [showCreatorProfile, setShowCreatorProfile] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
+
+    const currentVideo = videos[currentIndex];
+
+    // Mock creator data
+    const mockCreator = {
+        name: currentVideo?.creator || '',
+        avatar: currentVideo?.creator?.charAt(0) || 'T',
+        bio: 'Pengajar berpengalaman dengan 10+ tahun mengajar di bidang pendidikan.',
+        subjects: ['Matematika', 'Fisika'],
+        isVerified: true,
+        videoCount: mockVideos.filter(v => v.creator === currentVideo?.creator).length,
+    };
+
+    // Get videos by same creator
+    const creatorVideos = mockVideos.filter(v => v.creator === currentVideo?.creator);
 
     // Initialize video states
     useEffect(() => {
@@ -80,6 +101,14 @@ export function VideoFeed({ videos, onOpenMentor }: VideoFeedProps) {
         }
     };
 
+    const handleZiAbotAction = (video: Video, action: 'chat' | 'notes' | 'practice' | 'flashcards') => {
+        if (action === 'chat') {
+            onOpenMentor(video);
+        } else {
+            onZiAbotAction?.(video, action);
+        }
+    };
+
     return (
         <div
             ref={containerRef}
@@ -113,14 +142,37 @@ export function VideoFeed({ videos, onOpenMentor }: VideoFeedProps) {
                                     onLike={() => handleLike(video.id)}
                                     onShare={() => handleShare(video)}
                                     onOpenMentor={() => onOpenMentor(video)}
+                                    onZiAbotAction={(action) => handleZiAbotAction(video, action)}
+                                    onOpenComments={() => setShowComments(true)}
+                                    onOpenCreatorProfile={() => setShowCreatorProfile(true)}
                                 />
                             </motion.div>
                         )}
                     </AnimatePresence>
                 </div>
             ))}
+
+            {/* Q&A Comments Panel */}
+            {currentVideo && (
+                <QAComments
+                    video={currentVideo}
+                    isOpen={showComments}
+                    onClose={() => setShowComments(false)}
+                />
+            )}
+
+            {/* Creator Profile Panel */}
+            {currentVideo && (
+                <CreatorProfile
+                    creator={mockCreator}
+                    videos={creatorVideos}
+                    isOpen={showCreatorProfile}
+                    onClose={() => setShowCreatorProfile(false)}
+                />
+            )}
         </div>
     );
 }
 
 export default VideoFeed;
+

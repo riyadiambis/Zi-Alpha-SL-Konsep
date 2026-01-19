@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { VideoFeed } from '../components/video/video-feed';
 import { MentorChat } from '../components/chat/mentor-chat';
 import { StreakFlame } from '../components/gamification/streak-flame';
 import { XPToast, useXPToast } from '../components/gamification/xp-toast';
-import { mockVideos, mockUser, XP_REWARDS } from '../lib/mock-data';
-import type { Video } from '../lib/mock-data';
+import { mockVideos, mockUser, XP_REWARDS, generateMockNotes, generateMockPracticeQuestions, generateMockFlashcards } from '../lib/mock-data';
+import type { Video, ZiAbotContext } from '../lib/mock-data';
 
 export const Route = createFileRoute('/')({
   component: HomePage,
@@ -15,6 +15,7 @@ function HomePage() {
   const [isMentorOpen, setIsMentorOpen] = useState(false);
   const [activeVideo, setActiveVideo] = useState<Video | null>(null);
   const { toast, showXPToast, hideXPToast } = useXPToast();
+  const navigate = useNavigate();
 
   const handleOpenMentor = (video: Video) => {
     setActiveVideo(video);
@@ -25,6 +26,32 @@ function HomePage() {
 
   const handleCloseMentor = () => {
     setIsMentorOpen(false);
+  };
+
+  const handleZiAbotAction = (video: Video, action: 'notes' | 'practice' | 'flashcards') => {
+    // Create video context
+    const context: ZiAbotContext = {
+      type: 'video',
+      videoId: video.id,
+      videoTitle: video.title,
+      subject: video.subject,
+      grade: video.grade,
+    };
+
+    // Generate artifact and store in sessionStorage
+    if (action === 'notes') {
+      const notes = generateMockNotes(video.title, context);
+      sessionStorage.setItem('ziabot-notes', JSON.stringify(notes));
+      navigate({ to: '/ziabot/notes' as any });
+    } else if (action === 'practice') {
+      const practice = generateMockPracticeQuestions(video.title, context);
+      sessionStorage.setItem('ziabot-practice', JSON.stringify(practice));
+      navigate({ to: '/ziabot/practice' as any });
+    } else if (action === 'flashcards') {
+      const flashcards = generateMockFlashcards(video.title, context);
+      sessionStorage.setItem('ziabot-flashcards', JSON.stringify(flashcards));
+      navigate({ to: '/ziabot/flashcards' as any });
+    }
   };
 
   return (
@@ -44,6 +71,7 @@ function HomePage() {
       <VideoFeed
         videos={mockVideos}
         onOpenMentor={handleOpenMentor}
+        onZiAbotAction={handleZiAbotAction}
       />
 
       {/* Mentor Chat Bottom Sheet */}
@@ -63,3 +91,4 @@ function HomePage() {
     </div>
   );
 }
+
