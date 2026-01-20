@@ -99,12 +99,22 @@ export function QAComments({ video, isOpen, onClose }: QACommentsProps) {
                     animate={{ y: 0 }}
                     exit={{ y: '100%' }}
                     transition={{ type: 'spring', damping: 25 }}
+                    drag="y"
+                    dragConstraints={{ top: 0, bottom: 0 }}
+                    dragElastic={{ top: 0, bottom: 0.5 }}
+                    onDragEnd={(_, info) => {
+                        if (info.offset.y > 100) onClose();
+                    }}
                 >
+                    {/* Drag handle */}
+                    <div className="flex justify-center py-2">
+                        <div className="w-10 h-1 rounded-full bg-slate-600" />
+                    </div>
                     {/* Header */}
                     <div className="flex items-center justify-between p-4 border-b border-slate-800">
                         <div className="flex items-center gap-2">
                             <HugeiconsIcon icon={Message01Icon} size={20} className="text-indigo-400" />
-                            <h2 className="font-semibold text-slate-50">Tanya Jawab</h2>
+                            <h2 className="font-semibold text-slate-50">Diskusi & Tanya Jawab</h2>
                             <span className="px-2 py-0.5 rounded-full bg-slate-800 text-xs text-slate-400">
                                 {comments.length}
                             </span>
@@ -212,17 +222,25 @@ export function QAComments({ video, isOpen, onClose }: QACommentsProps) {
                                 type="text"
                                 value={newComment}
                                 onChange={(e) => setNewComment(e.target.value)}
-                                placeholder="Ajukan pertanyaan tentang materi ini..."
-                                className="flex-1 px-4 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-sm text-slate-50 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                                placeholder="Tanyakan sesuatu..."
+                                className="flex-1 px-4 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-sm text-slate-50 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all"
                             />
+                            <motion.button
+                                onClick={() => handleAskZiAbot(newComment || 'Jelaskan materi ini')}
+                                className="p-2.5 rounded-xl bg-indigo-500/20 text-indigo-400 hover:bg-indigo-500/30 transition-colors"
+                                whileTap={{ scale: 0.9 }}
+                                title="Tanya ZiAbot"
+                            >
+                                <HugeiconsIcon icon={AiBrain01Icon} size={18} />
+                            </motion.button>
                             <motion.button
                                 onClick={handleSubmit}
                                 disabled={!newComment.trim()}
                                 className={`p-2.5 rounded-xl transition-colors ${newComment.trim()
-                                        ? 'bg-indigo-500 text-white'
-                                        : 'bg-slate-800 text-slate-500'
+                                    ? 'bg-indigo-500 text-white shadow-lg shadow-indigo-500/30'
+                                    : 'bg-slate-800 text-slate-500'
                                     }`}
-                                whileTap={{ scale: 0.95 }}
+                                whileTap={{ scale: 0.9 }}
                             >
                                 <HugeiconsIcon icon={SentIcon} size={18} />
                             </motion.button>

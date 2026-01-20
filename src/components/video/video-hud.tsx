@@ -163,14 +163,15 @@ export function VideoHUD({
             <div className="absolute right-4 bottom-36 flex flex-col items-center gap-6">
                 {/* Like button */}
                 <motion.button
-                    className="flex flex-col items-center gap-1"
+                    className="flex flex-col items-center gap-1 pointer-events-auto"
                     onClick={onLike}
-                    whileTap={{ scale: 0.9 }}
+                    whileTap={{ scale: 0.85 }}
                 >
                     <motion.div
-                        className={`p-3 rounded-full glass ${isLiked ? 'text-emerald-500' : 'text-slate-50'}`}
-                        animate={isLiked ? { scale: [1, 1.2, 1] } : {}}
-                        transition={{ duration: 0.3 }}
+                        className={`p-3 rounded-full glass-strong backdrop-blur-md ${isLiked ? 'text-emerald-400 shadow-lg shadow-emerald-500/30' : 'text-slate-50 hover:text-emerald-300'}`}
+                        animate={isLiked ? { scale: [1, 1.3, 1] } : {}}
+                        transition={{ duration: 0.4, ease: 'easeOut' }}
+                        whileHover={{ scale: 1.1, boxShadow: '0 0 15px rgba(16, 185, 129, 0.3)' }}
                     >
                         <HugeiconsIcon
                             icon={FavouriteIcon}
@@ -179,32 +180,40 @@ export function VideoHUD({
                             fill={isLiked ? 'currentColor' : 'none'}
                         />
                     </motion.div>
-                    <span className="text-xs text-slate-300">
+                    <span className={`text-xs font-medium ${isLiked ? 'text-emerald-400' : 'text-slate-300'}`}>
                         {formatNumber(video.likes + (isLiked ? 1 : 0))}
                     </span>
                 </motion.button>
 
                 {/* Comments button - Q&A style */}
                 <motion.button
-                    className="flex flex-col items-center gap-1"
+                    className="flex flex-col items-center gap-1 pointer-events-auto"
                     onClick={onOpenComments}
-                    whileTap={{ scale: 0.9 }}
+                    whileTap={{ scale: 0.85 }}
+                    whileHover={{ scale: 1.05 }}
                 >
-                    <div className="p-3 rounded-full glass text-slate-50">
+                    <motion.div
+                        className="p-3 rounded-full glass-strong backdrop-blur-md text-cyan-400 hover:text-cyan-300 hover:shadow-lg hover:shadow-cyan-500/20 transition-all"
+                        whileHover={{ boxShadow: '0 0 20px rgba(34, 211, 238, 0.25)' }}
+                    >
                         <HugeiconsIcon icon={Message01Icon} size={24} strokeWidth={1.5} />
-                    </div>
-                    <span className="text-xs text-slate-300">Q&A</span>
+                    </motion.div>
+                    <span className="text-xs font-medium text-cyan-400">Q&A</span>
                 </motion.button>
 
                 {/* Share button */}
                 <motion.button
-                    className="flex flex-col items-center gap-1"
+                    className="flex flex-col items-center gap-1 pointer-events-auto"
                     onClick={onShare}
-                    whileTap={{ scale: 0.9 }}
+                    whileTap={{ scale: 0.85 }}
+                    whileHover={{ scale: 1.05 }}
                 >
-                    <div className="p-3 rounded-full glass text-slate-50">
+                    <motion.div
+                        className="p-3 rounded-full glass-strong backdrop-blur-md text-slate-50 hover:text-amber-300 transition-colors"
+                        whileHover={{ boxShadow: '0 0 15px rgba(251, 191, 36, 0.2)' }}
+                    >
                         <HugeiconsIcon icon={Share01Icon} size={24} strokeWidth={1.5} />
-                    </div>
+                    </motion.div>
                     <span className="text-xs text-slate-300">Share</span>
                 </motion.button>
 

@@ -717,3 +717,422 @@ export interface UserRole {
 export const mockUserRole: UserRole = {
     isCreatorMode: false,
 };
+
+// ========================================
+// Boss Battle System - Mock Data
+// ========================================
+
+export interface Boss {
+    id: string;
+    name: string;
+    topic: string;
+    subject: string;
+    maxHP: number;
+    baseDamage: number;
+    description: string;
+    difficulty: 'easy' | 'medium' | 'hard';
+    isPractice?: boolean;
+    avatarColor: string;
+    avatarIcon: string;
+}
+
+export interface BattleQuestion {
+    id: string;
+    question: string;
+    options: string[];
+    correctAnswer: number; // index of correct option
+    difficulty: 'easy' | 'medium' | 'hard';
+    hint?: string;
+}
+
+export interface BattleState {
+    bossId: string;
+    bossShieldHP: number;
+    bossShieldMaxHP: number;
+    bossCoreHP: number;
+    bossCoreMaxHP: number;
+    bossPhase: 1 | 2;
+    isRageMode: boolean;
+    playerHP: number;
+    playerMaxHP: number;
+    partnerHP: number;
+    partnerMaxHP: number;
+    comboCount: number;
+    currentQuestionIndex: number;
+    questionsAnswered: number;
+    correctAnswers: number;
+    isPracticeBoss: boolean;
+    status: 'active' | 'victory' | 'defeat';
+    battleLogs: string[];
+}
+
+export interface BattleResult {
+    victory: boolean;
+    xpEarned: number;
+    questionsAnswered: number;
+    correctAnswers: number;
+    maxCombo: number;
+    bossDefeated?: string;
+}
+
+// XP → Battle HP Mapping
+// Battle HP is derived from Total XP, capped at 300
+export const calculateBattleHP = (totalXP: number): number => {
+    const baseHP = Math.floor(totalXP / 10);
+    return Math.min(300, Math.max(50, baseHP)); // Min 50, Max 300
+};
+
+// Calculate damage dealt to boss
+export const calculatePlayerDamage = (comboCount: number): number => {
+    const baseDamage = 15;
+    const comboBonus = comboCount * 5;
+    return baseDamage + comboBonus;
+};
+
+// Calculate damage taken from boss (reduced by combo)
+export const calculateBossDamage = (baseDamage: number, comboCount: number, isPractice: boolean): number => {
+    const comboReduction = Math.min(comboCount * 3, 15); // Max 15 reduction
+    const damage = Math.max(5, baseDamage - comboReduction); // Min 5 damage
+    return isPractice ? Math.floor(damage * 0.5) : damage;
+};
+
+// Mock Bosses
+export const mockBosses: Boss[] = [
+    {
+        id: 'boss-practice',
+        name: 'Slime Belajar',
+        topic: 'Latihan Dasar',
+        subject: 'Matematika',
+        maxHP: 600,
+        baseDamage: 15,
+        description: 'Boss latihan untuk pemula. Damage rendah, cocok untuk belajar mekanik battle.',
+        difficulty: 'easy',
+        isPractice: true,
+        avatarColor: 'from-emerald-400 to-teal-500',
+        avatarIcon: 'slime',
+    },
+    {
+        id: 'boss-math-1',
+        name: 'Titan Pythagoras',
+        topic: 'Teorema Pythagoras',
+        subject: 'Matematika',
+        maxHP: 1700,
+        baseDamage: 30,
+        description: 'Kuasai teorema pythagoras untuk mengalahkan titan segitiga ini!',
+        difficulty: 'medium',
+        avatarColor: 'from-indigo-400 to-purple-600',
+        avatarIcon: 'triangle',
+    },
+    {
+        id: 'boss-science-1',
+        name: 'Ratu Klorofil',
+        topic: 'Fotosintesis',
+        subject: 'IPA',
+        maxHP: 1800,
+        baseDamage: 28,
+        description: 'Pahami proses fotosintesis untuk menaklukkan sang ratu hijau.',
+        difficulty: 'medium',
+        avatarColor: 'from-green-400 to-emerald-600',
+        avatarIcon: 'leaf',
+    },
+    {
+        id: 'boss-math-2',
+        name: 'Golem Variabel',
+        topic: 'Persamaan Linear',
+        subject: 'Matematika',
+        maxHP: 2000,
+        baseDamage: 30,
+        description: 'Selesaikan persamaan untuk menghancurkan golem batu ini!',
+        difficulty: 'hard',
+        avatarColor: 'from-slate-400 to-gray-600',
+        avatarIcon: 'cube',
+    },
+    {
+        id: 'boss-english-1',
+        name: 'Wizard of Tenses',
+        topic: 'Present Continuous',
+        subject: 'Bahasa Inggris',
+        maxHP: 1600,
+        baseDamage: 30,
+        description: 'Master the tenses to defeat the grammar wizard!',
+        difficulty: 'medium',
+        avatarColor: 'from-amber-400 to-orange-600',
+        avatarIcon: 'book',
+    },
+];
+
+// Mock Battle Questions by Boss
+export const mockBattleQuestions: Record<string, BattleQuestion[]> = {
+    'boss-practice': [
+        {
+            id: 'pq1',
+            question: 'Berapa hasil dari 5 + 3?',
+            options: ['6', '7', '8', '9'],
+            correctAnswer: 2,
+            difficulty: 'easy',
+            hint: 'Hitung satu per satu dari 5.',
+        },
+        {
+            id: 'pq2',
+            question: 'Berapa hasil dari 10 - 4?',
+            options: ['4', '5', '6', '7'],
+            correctAnswer: 2,
+            difficulty: 'easy',
+            hint: 'Kurangi 4 dari 10.',
+        },
+        {
+            id: 'pq3',
+            question: 'Berapa hasil dari 3 × 4?',
+            options: ['10', '11', '12', '13'],
+            correctAnswer: 2,
+            difficulty: 'easy',
+            hint: '3 ditambah 3 ditambah 3 ditambah 3.',
+        },
+    ],
+    'boss-math-1': [
+        {
+            id: 'pyth1',
+            question: 'Pada segitiga siku-siku, sisi terpanjang disebut?',
+            options: ['Alas', 'Tinggi', 'Hipotenusa', 'Diagonal'],
+            correctAnswer: 2,
+            difficulty: 'easy',
+            hint: 'Sisi ini selalu berhadapan dengan sudut siku-siku.',
+        },
+        {
+            id: 'pyth2',
+            question: 'Jika a=3 dan b=4, berapa c pada teorema pythagoras (a² + b² = c²)?',
+            options: ['4', '5', '6', '7'],
+            correctAnswer: 1,
+            difficulty: 'medium',
+            hint: '9 + 16 = ?',
+        },
+        {
+            id: 'pyth3',
+            question: 'Teorema Pythagoras hanya berlaku untuk segitiga apa?',
+            options: ['Sama sisi', 'Sama kaki', 'Siku-siku', 'Sembarang'],
+            correctAnswer: 2,
+            difficulty: 'easy',
+            hint: 'Lihat nama teoremanya.',
+        },
+        {
+            id: 'pyth4',
+            question: 'Jika hipotenusa = 13 dan satu sisi = 5, berapa sisi lainnya?',
+            options: ['8', '10', '12', '14'],
+            correctAnswer: 2,
+            difficulty: 'hard',
+            hint: '169 - 25 = ?',
+        },
+        {
+            id: 'pyth5',
+            question: 'Triple Pythagoras manakah yang BENAR?',
+            options: ['3, 4, 6', '5, 12, 13', '6, 8, 11', '7, 9, 12'],
+            correctAnswer: 1,
+            difficulty: 'medium',
+            hint: 'Cek dengan rumus a² + b² = c².',
+        },
+    ],
+    'boss-science-1': [
+        {
+            id: 'pyth1',
+            question: 'Pada segitiga siku-siku, sisi terpanjang disebut?',
+            options: ['Alas', 'Tinggi', 'Hipotenusa', 'Diagonal'],
+            correctAnswer: 2,
+            difficulty: 'easy',
+            hint: 'Sisi ini selalu berhadapan dengan sudut siku-siku.',
+        },
+        {
+            id: 'pyth2',
+            question: 'Jika a=3 dan b=4, berapa c pada teorema pythagoras (a² + b² = c²)?',
+            options: ['4', '5', '6', '7'],
+            correctAnswer: 1,
+            difficulty: 'medium',
+            hint: '9 + 16 = ?',
+        },
+        {
+            id: 'pyth3',
+            question: 'Teorema Pythagoras hanya berlaku untuk segitiga apa?',
+            options: ['Sama sisi', 'Sama kaki', 'Siku-siku', 'Sembarang'],
+            correctAnswer: 2,
+            difficulty: 'easy',
+            hint: 'Lihat nama teoremanya.',
+        },
+        {
+            id: 'pyth4',
+            question: 'Jika hipotenusa = 13 dan satu sisi = 5, berapa sisi lainnya?',
+            options: ['8', '10', '12', '14'],
+            correctAnswer: 2,
+            difficulty: 'hard',
+            hint: '169 - 25 = ?',
+        },
+        {
+            id: 'pyth5',
+            question: 'Triple Pythagoras manakah yang BENAR?',
+            options: ['3, 4, 6', '5, 12, 13', '6, 8, 11', '7, 9, 12'],
+            correctAnswer: 1,
+            difficulty: 'medium',
+            hint: 'Cek dengan rumus a² + b² = c².',
+        },
+    ],
+    'boss-fotosintesis': [
+        {
+            id: 'foto1',
+            question: 'Apa yang dihasilkan dari proses fotosintesis?',
+            options: ['Oksigen & Karbondioksida', 'Glukosa & Oksigen', 'Air & Glukosa', 'Karbondioksida & Air'],
+            correctAnswer: 1,
+            difficulty: 'easy',
+            hint: 'Tumbuhan menghasilkan makanan dan gas yang kita hirup.',
+        },
+        {
+            id: 'foto2',
+            question: 'Di organel sel manakah fotosintesis terjadi?',
+            options: ['Mitokondria', 'Kloroplas', 'Ribosom', 'Nukleus'],
+            correctAnswer: 1,
+            difficulty: 'easy',
+            hint: 'Organel ini mengandung klorofil.',
+        },
+        {
+            id: 'foto3',
+            question: 'Apa fungsi klorofil dalam fotosintesis?',
+            options: ['Menyerap air', 'Menyerap CO2', 'Menyerap cahaya', 'Menyimpan glukosa'],
+            correctAnswer: 2,
+            difficulty: 'medium',
+            hint: 'Klorofil membuat daun berwarna hijau karena...',
+        },
+        {
+            id: 'foto4',
+            question: 'Bahan yang dibutuhkan untuk fotosintesis adalah?',
+            options: ['O2 dan Glukosa', 'CO2 dan H2O', 'O2 dan H2O', 'CO2 dan Glukosa'],
+            correctAnswer: 1,
+            difficulty: 'medium',
+            hint: 'Gas dan cairan yang diserap tumbuhan.',
+        },
+    ],
+    'boss-math-2': [
+        {
+            id: 'pers1',
+            question: 'Jika 2x + 4 = 10, berapa nilai x?',
+            options: ['2', '3', '4', '5'],
+            correctAnswer: 1,
+            difficulty: 'easy',
+            hint: 'Pindahkan 4 ke kanan, lalu bagi dengan 2.',
+        },
+        {
+            id: 'pers2',
+            question: 'Jika 3x - 6 = 9, berapa nilai x?',
+            options: ['3', '4', '5', '6'],
+            correctAnswer: 2,
+            difficulty: 'medium',
+            hint: 'Tambah 6 di kedua sisi.',
+        },
+        {
+            id: 'pers3',
+            question: 'Penyelesaian dari 4x + 2 = 2x + 8 adalah?',
+            options: ['x = 2', 'x = 3', 'x = 4', 'x = 5'],
+            correctAnswer: 1,
+            difficulty: 'hard',
+            hint: 'Pindahkan variabel ke satu sisi.',
+        },
+        {
+            id: 'pers4',
+            question: 'Jika x/2 + 3 = 7, berapa x?',
+            options: ['6', '8', '10', '12'],
+            correctAnswer: 1,
+            difficulty: 'medium',
+            hint: 'Kurangi 3, lalu kalikan 2.',
+        },
+    ],
+    'boss-english-1': [
+        {
+            id: 'tens1',
+            question: 'Which sentence uses Simple Present correctly?',
+            options: ['She go to school', 'She goes to school', 'She going to school', 'She gone to school'],
+            correctAnswer: 1,
+            difficulty: 'easy',
+            hint: 'Third person singular needs -s/-es.',
+        },
+        {
+            id: 'tens2',
+            question: 'Which is Past Tense of "eat"?',
+            options: ['eated', 'ate', 'eaten', 'eating'],
+            correctAnswer: 1,
+            difficulty: 'easy',
+            hint: 'This is an irregular verb.',
+        },
+        {
+            id: 'tens3',
+            question: '"I have been studying for 2 hours" is what tense?',
+            options: ['Present Perfect', 'Past Perfect', 'Present Perfect Continuous', 'Past Continuous'],
+            correctAnswer: 2,
+            difficulty: 'hard',
+            hint: 'Have been + V-ing shows duration.',
+        },
+        {
+            id: 'tens4',
+            question: 'Choose the correct Future Tense:',
+            options: ['I will went', 'I will go', 'I will going', 'I will goes'],
+            correctAnswer: 1,
+            difficulty: 'medium',
+            hint: 'Will + base form of verb.',
+        },
+    ],
+};
+
+// ZiAbot Battle Hints (mock responses)
+export const ziabotBattleHints = [
+    'Hmm, coba pikirkan kembali. Apa yang kamu ingat tentang konsep ini?',
+    'Petunjuk: fokus pada kata kunci dalam pertanyaan.',
+    'Ingat rumus dasarnya! Itu akan membantu.',
+    'Coba eliminasi jawaban yang jelas salah dulu.',
+    'Jangan terburu-buru, baca pertanyaan dengan teliti.',
+    'Kamu bisa! Ingat apa yang sudah dipelajari sebelumnya.',
+];
+
+export const getRandomBattleHint = (): string => {
+    return ziabotBattleHints[Math.floor(Math.random() * ziabotBattleHints.length)];
+};
+
+// XP Rewards for battle
+export const BATTLE_XP_REWARDS = {
+    VICTORY: 100,
+    DEFEAT: 25, // Still get XP for trying
+    PER_CORRECT_ANSWER: 10,
+    COMBO_BONUS_PER_3: 15,
+    PRACTICE_MULTIPLIER: 0.5,
+} as const;
+
+// Calculate battle XP reward
+export const calculateBattleXP = (result: BattleResult, isPractice: boolean): number => {
+    let xp = result.victory ? BATTLE_XP_REWARDS.VICTORY : BATTLE_XP_REWARDS.DEFEAT;
+    xp += result.correctAnswers * BATTLE_XP_REWARDS.PER_CORRECT_ANSWER;
+    xp += Math.floor(result.maxCombo / 3) * BATTLE_XP_REWARDS.COMBO_BONUS_PER_3;
+    return isPractice ? Math.floor(xp * BATTLE_XP_REWARDS.PRACTICE_MULTIPLIER) : xp;
+};
+
+// Initial battle state factory
+export const createInitialBattleState = (boss: Boss, playerXP: number, partnerXP: number): BattleState => {
+    const playerBattleHP = calculateBattleHP(playerXP);
+    const partnerBattleHP = calculateBattleHP(partnerXP);
+    const shieldHP = Math.floor(boss.maxHP * 0.3);
+    const coreHP = boss.maxHP - shieldHP;
+
+    return {
+        bossId: boss.id,
+        bossShieldHP: shieldHP,
+        bossShieldMaxHP: shieldHP,
+        bossCoreHP: coreHP,
+        bossCoreMaxHP: coreHP,
+        bossPhase: 1,
+        isRageMode: false,
+        playerHP: playerBattleHP,
+        playerMaxHP: playerBattleHP,
+        partnerHP: partnerBattleHP,
+        partnerMaxHP: partnerBattleHP,
+        comboCount: 0,
+        currentQuestionIndex: 0,
+        questionsAnswered: 0,
+        correctAnswers: 0,
+        isPracticeBoss: boss.isPractice || false,
+        status: 'active',
+        battleLogs: ['Pertarungan dimulai!'],
+    };
+};

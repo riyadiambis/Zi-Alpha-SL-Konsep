@@ -13,15 +13,24 @@ import { Route as ZiabotRouteImport } from './routes/ziabot'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as ProgressRouteImport } from './routes/progress'
 import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as KnowledgeArenaRouteImport } from './routes/knowledge-arena'
+import { Route as FunGamesRouteImport } from './routes/fun-games'
 import { Route as ExploreRouteImport } from './routes/explore'
 import { Route as DownloadsRouteImport } from './routes/downloads'
+import { Route as BossBattleRouteImport } from './routes/boss-battle'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ZiabotPracticeRouteImport } from './routes/ziabot.practice'
 import { Route as ZiabotNotesRouteImport } from './routes/ziabot.notes'
 import { Route as ZiabotFlashcardsRouteImport } from './routes/ziabot.flashcards'
+import { Route as KnowledgeArenaMatchRouteImport } from './routes/knowledge-arena.match'
+import { Route as KnowledgeArenaLobbyRouteImport } from './routes/knowledge-arena.lobby'
+import { Route as FunGamesPatternRouteImport } from './routes/fun-games.pattern'
+import { Route as FunGamesMemoryRouteImport } from './routes/fun-games.memory'
+import { Route as FunGamesLogicRouteImport } from './routes/fun-games.logic'
 import { Route as ExploreSubjectIdRouteImport } from './routes/explore.$subjectId'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
 import { Route as CreatorExplainRouteImport } from './routes/creator.explain'
+import { Route as BossBattleBattleIdRouteImport } from './routes/boss-battle.$battleId'
 import { Route as AuthSignupRouteImport } from './routes/auth/signup'
 import { Route as AuthLoginRouteImport } from './routes/auth/login'
 
@@ -45,6 +54,16 @@ const ProfileRoute = ProfileRouteImport.update({
   path: '/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
+const KnowledgeArenaRoute = KnowledgeArenaRouteImport.update({
+  id: '/knowledge-arena',
+  path: '/knowledge-arena',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FunGamesRoute = FunGamesRouteImport.update({
+  id: '/fun-games',
+  path: '/fun-games',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ExploreRoute = ExploreRouteImport.update({
   id: '/explore',
   path: '/explore',
@@ -53,6 +72,11 @@ const ExploreRoute = ExploreRouteImport.update({
 const DownloadsRoute = DownloadsRouteImport.update({
   id: '/downloads',
   path: '/downloads',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BossBattleRoute = BossBattleRouteImport.update({
+  id: '/boss-battle',
+  path: '/boss-battle',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -75,6 +99,31 @@ const ZiabotFlashcardsRoute = ZiabotFlashcardsRouteImport.update({
   path: '/flashcards',
   getParentRoute: () => ZiabotRoute,
 } as any)
+const KnowledgeArenaMatchRoute = KnowledgeArenaMatchRouteImport.update({
+  id: '/match',
+  path: '/match',
+  getParentRoute: () => KnowledgeArenaRoute,
+} as any)
+const KnowledgeArenaLobbyRoute = KnowledgeArenaLobbyRouteImport.update({
+  id: '/lobby',
+  path: '/lobby',
+  getParentRoute: () => KnowledgeArenaRoute,
+} as any)
+const FunGamesPatternRoute = FunGamesPatternRouteImport.update({
+  id: '/pattern',
+  path: '/pattern',
+  getParentRoute: () => FunGamesRoute,
+} as any)
+const FunGamesMemoryRoute = FunGamesMemoryRouteImport.update({
+  id: '/memory',
+  path: '/memory',
+  getParentRoute: () => FunGamesRoute,
+} as any)
+const FunGamesLogicRoute = FunGamesLogicRouteImport.update({
+  id: '/logic',
+  path: '/logic',
+  getParentRoute: () => FunGamesRoute,
+} as any)
 const ExploreSubjectIdRoute = ExploreSubjectIdRouteImport.update({
   id: '/$subjectId',
   path: '/$subjectId',
@@ -90,6 +139,11 @@ const CreatorExplainRoute = CreatorExplainRouteImport.update({
   path: '/creator/explain',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BossBattleBattleIdRoute = BossBattleBattleIdRouteImport.update({
+  id: '/$battleId',
+  path: '/$battleId',
+  getParentRoute: () => BossBattleRoute,
+} as any)
 const AuthSignupRoute = AuthSignupRouteImport.update({
   id: '/auth/signup',
   path: '/auth/signup',
@@ -103,34 +157,52 @@ const AuthLoginRoute = AuthLoginRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/boss-battle': typeof BossBattleRouteWithChildren
   '/downloads': typeof DownloadsRoute
   '/explore': typeof ExploreRouteWithChildren
+  '/fun-games': typeof FunGamesRouteWithChildren
+  '/knowledge-arena': typeof KnowledgeArenaRouteWithChildren
   '/profile': typeof ProfileRoute
   '/progress': typeof ProgressRoute
   '/settings': typeof SettingsRoute
   '/ziabot': typeof ZiabotRouteWithChildren
   '/auth/login': typeof AuthLoginRoute
   '/auth/signup': typeof AuthSignupRoute
+  '/boss-battle/$battleId': typeof BossBattleBattleIdRoute
   '/creator/explain': typeof CreatorExplainRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/explore/$subjectId': typeof ExploreSubjectIdRoute
+  '/fun-games/logic': typeof FunGamesLogicRoute
+  '/fun-games/memory': typeof FunGamesMemoryRoute
+  '/fun-games/pattern': typeof FunGamesPatternRoute
+  '/knowledge-arena/lobby': typeof KnowledgeArenaLobbyRoute
+  '/knowledge-arena/match': typeof KnowledgeArenaMatchRoute
   '/ziabot/flashcards': typeof ZiabotFlashcardsRoute
   '/ziabot/notes': typeof ZiabotNotesRoute
   '/ziabot/practice': typeof ZiabotPracticeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/boss-battle': typeof BossBattleRouteWithChildren
   '/downloads': typeof DownloadsRoute
   '/explore': typeof ExploreRouteWithChildren
+  '/fun-games': typeof FunGamesRouteWithChildren
+  '/knowledge-arena': typeof KnowledgeArenaRouteWithChildren
   '/profile': typeof ProfileRoute
   '/progress': typeof ProgressRoute
   '/settings': typeof SettingsRoute
   '/ziabot': typeof ZiabotRouteWithChildren
   '/auth/login': typeof AuthLoginRoute
   '/auth/signup': typeof AuthSignupRoute
+  '/boss-battle/$battleId': typeof BossBattleBattleIdRoute
   '/creator/explain': typeof CreatorExplainRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/explore/$subjectId': typeof ExploreSubjectIdRoute
+  '/fun-games/logic': typeof FunGamesLogicRoute
+  '/fun-games/memory': typeof FunGamesMemoryRoute
+  '/fun-games/pattern': typeof FunGamesPatternRoute
+  '/knowledge-arena/lobby': typeof KnowledgeArenaLobbyRoute
+  '/knowledge-arena/match': typeof KnowledgeArenaMatchRoute
   '/ziabot/flashcards': typeof ZiabotFlashcardsRoute
   '/ziabot/notes': typeof ZiabotNotesRoute
   '/ziabot/practice': typeof ZiabotPracticeRoute
@@ -138,17 +210,26 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/boss-battle': typeof BossBattleRouteWithChildren
   '/downloads': typeof DownloadsRoute
   '/explore': typeof ExploreRouteWithChildren
+  '/fun-games': typeof FunGamesRouteWithChildren
+  '/knowledge-arena': typeof KnowledgeArenaRouteWithChildren
   '/profile': typeof ProfileRoute
   '/progress': typeof ProgressRoute
   '/settings': typeof SettingsRoute
   '/ziabot': typeof ZiabotRouteWithChildren
   '/auth/login': typeof AuthLoginRoute
   '/auth/signup': typeof AuthSignupRoute
+  '/boss-battle/$battleId': typeof BossBattleBattleIdRoute
   '/creator/explain': typeof CreatorExplainRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/explore/$subjectId': typeof ExploreSubjectIdRoute
+  '/fun-games/logic': typeof FunGamesLogicRoute
+  '/fun-games/memory': typeof FunGamesMemoryRoute
+  '/fun-games/pattern': typeof FunGamesPatternRoute
+  '/knowledge-arena/lobby': typeof KnowledgeArenaLobbyRoute
+  '/knowledge-arena/match': typeof KnowledgeArenaMatchRoute
   '/ziabot/flashcards': typeof ZiabotFlashcardsRoute
   '/ziabot/notes': typeof ZiabotNotesRoute
   '/ziabot/practice': typeof ZiabotPracticeRoute
@@ -157,51 +238,78 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/boss-battle'
     | '/downloads'
     | '/explore'
+    | '/fun-games'
+    | '/knowledge-arena'
     | '/profile'
     | '/progress'
     | '/settings'
     | '/ziabot'
     | '/auth/login'
     | '/auth/signup'
+    | '/boss-battle/$battleId'
     | '/creator/explain'
     | '/demo/tanstack-query'
     | '/explore/$subjectId'
+    | '/fun-games/logic'
+    | '/fun-games/memory'
+    | '/fun-games/pattern'
+    | '/knowledge-arena/lobby'
+    | '/knowledge-arena/match'
     | '/ziabot/flashcards'
     | '/ziabot/notes'
     | '/ziabot/practice'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/boss-battle'
     | '/downloads'
     | '/explore'
+    | '/fun-games'
+    | '/knowledge-arena'
     | '/profile'
     | '/progress'
     | '/settings'
     | '/ziabot'
     | '/auth/login'
     | '/auth/signup'
+    | '/boss-battle/$battleId'
     | '/creator/explain'
     | '/demo/tanstack-query'
     | '/explore/$subjectId'
+    | '/fun-games/logic'
+    | '/fun-games/memory'
+    | '/fun-games/pattern'
+    | '/knowledge-arena/lobby'
+    | '/knowledge-arena/match'
     | '/ziabot/flashcards'
     | '/ziabot/notes'
     | '/ziabot/practice'
   id:
     | '__root__'
     | '/'
+    | '/boss-battle'
     | '/downloads'
     | '/explore'
+    | '/fun-games'
+    | '/knowledge-arena'
     | '/profile'
     | '/progress'
     | '/settings'
     | '/ziabot'
     | '/auth/login'
     | '/auth/signup'
+    | '/boss-battle/$battleId'
     | '/creator/explain'
     | '/demo/tanstack-query'
     | '/explore/$subjectId'
+    | '/fun-games/logic'
+    | '/fun-games/memory'
+    | '/fun-games/pattern'
+    | '/knowledge-arena/lobby'
+    | '/knowledge-arena/match'
     | '/ziabot/flashcards'
     | '/ziabot/notes'
     | '/ziabot/practice'
@@ -209,8 +317,11 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BossBattleRoute: typeof BossBattleRouteWithChildren
   DownloadsRoute: typeof DownloadsRoute
   ExploreRoute: typeof ExploreRouteWithChildren
+  FunGamesRoute: typeof FunGamesRouteWithChildren
+  KnowledgeArenaRoute: typeof KnowledgeArenaRouteWithChildren
   ProfileRoute: typeof ProfileRoute
   ProgressRoute: typeof ProgressRoute
   SettingsRoute: typeof SettingsRoute
@@ -251,6 +362,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/knowledge-arena': {
+      id: '/knowledge-arena'
+      path: '/knowledge-arena'
+      fullPath: '/knowledge-arena'
+      preLoaderRoute: typeof KnowledgeArenaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/fun-games': {
+      id: '/fun-games'
+      path: '/fun-games'
+      fullPath: '/fun-games'
+      preLoaderRoute: typeof FunGamesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/explore': {
       id: '/explore'
       path: '/explore'
@@ -263,6 +388,13 @@ declare module '@tanstack/react-router' {
       path: '/downloads'
       fullPath: '/downloads'
       preLoaderRoute: typeof DownloadsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/boss-battle': {
+      id: '/boss-battle'
+      path: '/boss-battle'
+      fullPath: '/boss-battle'
+      preLoaderRoute: typeof BossBattleRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -293,6 +425,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ZiabotFlashcardsRouteImport
       parentRoute: typeof ZiabotRoute
     }
+    '/knowledge-arena/match': {
+      id: '/knowledge-arena/match'
+      path: '/match'
+      fullPath: '/knowledge-arena/match'
+      preLoaderRoute: typeof KnowledgeArenaMatchRouteImport
+      parentRoute: typeof KnowledgeArenaRoute
+    }
+    '/knowledge-arena/lobby': {
+      id: '/knowledge-arena/lobby'
+      path: '/lobby'
+      fullPath: '/knowledge-arena/lobby'
+      preLoaderRoute: typeof KnowledgeArenaLobbyRouteImport
+      parentRoute: typeof KnowledgeArenaRoute
+    }
+    '/fun-games/pattern': {
+      id: '/fun-games/pattern'
+      path: '/pattern'
+      fullPath: '/fun-games/pattern'
+      preLoaderRoute: typeof FunGamesPatternRouteImport
+      parentRoute: typeof FunGamesRoute
+    }
+    '/fun-games/memory': {
+      id: '/fun-games/memory'
+      path: '/memory'
+      fullPath: '/fun-games/memory'
+      preLoaderRoute: typeof FunGamesMemoryRouteImport
+      parentRoute: typeof FunGamesRoute
+    }
+    '/fun-games/logic': {
+      id: '/fun-games/logic'
+      path: '/logic'
+      fullPath: '/fun-games/logic'
+      preLoaderRoute: typeof FunGamesLogicRouteImport
+      parentRoute: typeof FunGamesRoute
+    }
     '/explore/$subjectId': {
       id: '/explore/$subjectId'
       path: '/$subjectId'
@@ -314,6 +481,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CreatorExplainRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/boss-battle/$battleId': {
+      id: '/boss-battle/$battleId'
+      path: '/$battleId'
+      fullPath: '/boss-battle/$battleId'
+      preLoaderRoute: typeof BossBattleBattleIdRouteImport
+      parentRoute: typeof BossBattleRoute
+    }
     '/auth/signup': {
       id: '/auth/signup'
       path: '/auth/signup'
@@ -331,6 +505,18 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface BossBattleRouteChildren {
+  BossBattleBattleIdRoute: typeof BossBattleBattleIdRoute
+}
+
+const BossBattleRouteChildren: BossBattleRouteChildren = {
+  BossBattleBattleIdRoute: BossBattleBattleIdRoute,
+}
+
+const BossBattleRouteWithChildren = BossBattleRoute._addFileChildren(
+  BossBattleRouteChildren,
+)
+
 interface ExploreRouteChildren {
   ExploreSubjectIdRoute: typeof ExploreSubjectIdRoute
 }
@@ -341,6 +527,36 @@ const ExploreRouteChildren: ExploreRouteChildren = {
 
 const ExploreRouteWithChildren =
   ExploreRoute._addFileChildren(ExploreRouteChildren)
+
+interface FunGamesRouteChildren {
+  FunGamesLogicRoute: typeof FunGamesLogicRoute
+  FunGamesMemoryRoute: typeof FunGamesMemoryRoute
+  FunGamesPatternRoute: typeof FunGamesPatternRoute
+}
+
+const FunGamesRouteChildren: FunGamesRouteChildren = {
+  FunGamesLogicRoute: FunGamesLogicRoute,
+  FunGamesMemoryRoute: FunGamesMemoryRoute,
+  FunGamesPatternRoute: FunGamesPatternRoute,
+}
+
+const FunGamesRouteWithChildren = FunGamesRoute._addFileChildren(
+  FunGamesRouteChildren,
+)
+
+interface KnowledgeArenaRouteChildren {
+  KnowledgeArenaLobbyRoute: typeof KnowledgeArenaLobbyRoute
+  KnowledgeArenaMatchRoute: typeof KnowledgeArenaMatchRoute
+}
+
+const KnowledgeArenaRouteChildren: KnowledgeArenaRouteChildren = {
+  KnowledgeArenaLobbyRoute: KnowledgeArenaLobbyRoute,
+  KnowledgeArenaMatchRoute: KnowledgeArenaMatchRoute,
+}
+
+const KnowledgeArenaRouteWithChildren = KnowledgeArenaRoute._addFileChildren(
+  KnowledgeArenaRouteChildren,
+)
 
 interface ZiabotRouteChildren {
   ZiabotFlashcardsRoute: typeof ZiabotFlashcardsRoute
@@ -359,8 +575,11 @@ const ZiabotRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BossBattleRoute: BossBattleRouteWithChildren,
   DownloadsRoute: DownloadsRoute,
   ExploreRoute: ExploreRouteWithChildren,
+  FunGamesRoute: FunGamesRouteWithChildren,
+  KnowledgeArenaRoute: KnowledgeArenaRouteWithChildren,
   ProfileRoute: ProfileRoute,
   ProgressRoute: ProgressRoute,
   SettingsRoute: SettingsRoute,
